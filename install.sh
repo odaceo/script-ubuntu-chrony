@@ -1,13 +1,21 @@
 #!/bin/bash
 
-# Update your local package index
-sudo apt-get update
+# Init variables
+NTP=${1}
+FallbackNTP=${2:-'0.ubuntu.pool.ntp.org 1.ubuntu.pool.ntp.org 2.ubuntu.pool.ntp.org 3.ubuntu.pool.ntp.org'}
 
-# Install the Chrony package and its dependencies
-sudo apt-get -y install chrony
+# Check preconditions
+if [ -z "${NTP}" ]; then
+    echo 'The NTP server list is required.'
+    exit 1
+fi
 
-# Start Chrony when the system starts
-sudo systemctl enable chrony
+# Enable time syncronization
+sudo timedatectl set-ntp true 
 
-# Start Chrony
-sudo systemctl start chrony
+# Configure NTP Servers
+sudo sed -i "s|^[#]*NTP=.*|NTP=${NTP}|" /etc/systemd/timesyncd.conf
+sudo sed -i "s|^[#]*FallbackNTP=.*|FallbackNTP=${FallbackNTP}|" /etc/systemd/timesyncd.conf
+
+# Restart timesyncd
+sudo systemctl restart systemd-timesyncd.service
