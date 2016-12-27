@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, 
-    path: "https://raw.githubusercontent.com/odaceo/script-ubuntu-ntp/xenial64/install.sh"
+    path: "https://raw.githubusercontent.com/odaceo/script-ubuntu-ntp/xenial64/install.sh",
     args: ["0.ch.pool.ntp.org 1.ch.pool.ntp.org 2.ch.pool.ntp.org 3.ch.pool.ntp.org"]
 end
 ```
