@@ -17,5 +17,8 @@ sudo timedatectl set-ntp true
 sudo sed -i "s|^[#]*NTP=.*|NTP=${NTP}|" /etc/systemd/timesyncd.conf
 sudo sed -i "s|^[#]*FallbackNTP=.*|FallbackNTP=${FallbackNTP}|" /etc/systemd/timesyncd.conf
 
+# Start timesyncd when the system starts
+sudo systemctl enable systemd-timesyncd.service
+
 # Restart timesyncd
 sudo systemctl restart systemd-timesyncd.service
