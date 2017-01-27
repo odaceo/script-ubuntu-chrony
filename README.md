@@ -1,4 +1,4 @@
-# Script | Ubuntu | NTP
+# Script :: Ubuntu :: NTP
 
 [![License](https://img.shields.io/github/license/odaceo/script-ubuntu-ntp.svg)](LICENSE)
 
