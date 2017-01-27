@@ -15,11 +15,11 @@
 # limitations under the License.
 
 # Init variables
-NTP=${1}
-FallbackNTP=${2:-'0.ubuntu.pool.ntp.org 1.ubuntu.pool.ntp.org 2.ubuntu.pool.ntp.org 3.ubuntu.pool.ntp.org'}
+NTP_SERVER_LIST=${1}
+NTP_FALLBACK_SERVER_LIST=${2:-'0.ubuntu.pool.ntp.org 1.ubuntu.pool.ntp.org 2.ubuntu.pool.ntp.org 3.ubuntu.pool.ntp.org'}
 
 # Check preconditions
-if [ -z "${NTP}" ]; then
+if [ -z "${NTP_SERVER_LIST}" ]; then
     echo 'The NTP server list is required.'
     exit 1
 fi
@@ -28,8 +28,8 @@ fi
 sudo timedatectl set-ntp true 
 
 # Configure NTP Servers
-sudo sed -i "s|^[#]*NTP=.*|NTP=${NTP}|" /etc/systemd/timesyncd.conf
-sudo sed -i "s|^[#]*FallbackNTP=.*|FallbackNTP=${FallbackNTP}|" /etc/systemd/timesyncd.conf
+sudo sed -i "s|^[#]*NTP=.*|NTP=${NTP_SERVER_LIST}|" /etc/systemd/timesyncd.conf
+sudo sed -i "s|^[#]*FallbackNTP=.*|FallbackNTP=${NTP_FALLBACK_SERVER_LIST}|" /etc/systemd/timesyncd.conf
 
 # Start timesyncd when the system starts
 sudo systemctl enable systemd-timesyncd.service
